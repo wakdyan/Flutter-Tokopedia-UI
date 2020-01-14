@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class Account extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(child: Container(child: Text('Account Page'))),
+    );
   }
 }
