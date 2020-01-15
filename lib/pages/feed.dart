@@ -13,20 +13,19 @@ class _FeedState extends State<Feed> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Updates",
-        style: _tabStyle,
+//        style: _tabStyle,
       ),
     ),
     Tab(
       child: Text(
         "Explore",
-        style: _tabStyle,
+//        style: _tabStyle,
       ),
     ),
   ];
   List<Widget> feedPages = [FeedUpdate(), FeedExplorer()];
 
-  static var _tabStyle =
-      TextStyle(color: Colors.green[1000], fontWeight: FontWeight.w800);
+  static var _tabStyle = TextStyle(fontWeight: FontWeight.w800);
 
   @override
   void initState() {
@@ -54,6 +53,10 @@ class _FeedState extends State<Feed> with TickerProviderStateMixin {
               bottom: TabBar(
                 controller: _tabController,
                 tabs: _tab,
+                labelColor: Colors.green[1000],
+                labelStyle: _tabStyle,
+                unselectedLabelColor: Color(0xFF9fa6b0),
+                unselectedLabelStyle: _tabStyle,
                 indicatorColor: Colors.green[1000],
                 indicatorWeight: 4,
               ),
@@ -90,6 +93,7 @@ class _FeedState extends State<Feed> with TickerProviderStateMixin {
       ),
     );
   }
+
   @override
   void dispose() {
     _tabController.dispose();

@@ -9,7 +9,7 @@ void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: Colors.white),
+        appBarTheme: AppBarTheme(color: Colors.white)
       ),
       home: MyApp(),
       debugShowCheckedModeBanner: false,
