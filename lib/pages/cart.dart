@@ -4,7 +4,11 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Container(child: Text("Cart Page"))),
+      body: Center(
+        child: Container(
+          child: Text("Cart Page"),
+        ),
+      ),
     );
   }
 }

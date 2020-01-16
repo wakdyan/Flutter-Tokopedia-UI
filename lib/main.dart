@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tokopedia_app/pages/account.dart';
+import 'package:tokopedia_app/pages/cart.dart';
 import 'package:tokopedia_app/pages/feed.dart';
 import 'package:tokopedia_app/pages/home.dart';
 import 'package:tokopedia_app/pages/login.dart';
@@ -28,11 +30,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   TabController _tabController;
   PageController _pageController;
+
   int _currentIndex;
+  bool _isLogged;
 
-  List<Widget> listPages = [Home(), Feed(), Store()];
+//  List<Widget> listPage = [Home(), Feed(), Store()];
 
-//  List<Widget> listPages = [Home(), Feed(), Store(), Cart(), Account()];
+  List<Widget> listPages = [Home(), Feed(), Store(), Cart(), Account()];
   List<String> namePages = [
     "Home",
     "Feed",
@@ -43,6 +47,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    _isLogged = false;
     _currentIndex = 0;
     _pageController =
         PageController(initialPage: _currentIndex, keepPage: true);
@@ -65,9 +70,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           });
 
           if (_currentIndex == 3 || _currentIndex == 4) {
-            _currentIndex -= 2;
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Login()));
+            if (_isLogged == true) {
+              _currentIndex = index;
+            } else {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Login()));
+              _currentIndex = 0;
+            }
           }
         },
         type: BottomNavigationBarType.fixed,
