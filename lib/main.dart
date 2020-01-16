@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tokopedia_app/pages/account.dart';
-import 'package:tokopedia_app/pages/cart.dart';
 import 'package:tokopedia_app/pages/feed.dart';
 import 'package:tokopedia_app/pages/home.dart';
+import 'package:tokopedia_app/pages/login.dart';
 import 'package:tokopedia_app/pages/store.dart';
 
 void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: Colors.white)
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          iconTheme: IconThemeData(color: Color(0xFF9fa6b0)),
+          brightness: Brightness.light,
+        ),
       ),
       home: MyApp(),
       debugShowCheckedModeBanner: false,
@@ -27,7 +30,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   PageController _pageController;
   int _currentIndex;
 
-  List<Widget> listPages = [Home(), Feed(), Store(), Cart(), Account()];
+  List<Widget> listPages = [Home(), Feed(), Store()];
+
+//  List<Widget> listPages = [Home(), Feed(), Store(), Cart(), Account()];
   List<String> namePages = [
     "Home",
     "Feed",
@@ -58,6 +63,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           setState(() {
             _currentIndex = index;
           });
+
+          if (_currentIndex == 3 || _currentIndex == 4) {
+            _currentIndex -= 2;
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Login()));
+          }
         },
         type: BottomNavigationBarType.fixed,
         selectedIconTheme: IconThemeData(color: Colors.green[1000]),

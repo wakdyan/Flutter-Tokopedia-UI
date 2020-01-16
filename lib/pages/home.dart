@@ -48,21 +48,18 @@ class _HomeState extends State<Home> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.favorite),
-              color: Color(0xFF9fa6b0),
               onPressed: () {
                 print("Favorite");
               },
             ),
             IconButton(
               icon: Icon(Icons.mail),
-              color: Color(0xFF9fa6b0),
               onPressed: () {
                 print("Mail");
               },
             ),
             IconButton(
               icon: Icon(Icons.notifications),
-              color: Color(0xFF9fa6b0),
               onPressed: () {
                 print("Notification");
               },

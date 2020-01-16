@@ -133,7 +133,7 @@ class _FeedUpdateState extends State<FeedUpdate> {
                       itemCount: 2,
                       itemBuilder: (context, i) {
                         return Container(
-                          width: 305,
+                          width: 285,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -167,7 +167,7 @@ class _FeedUpdateState extends State<FeedUpdate> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Container(
-                                      width: 135,
+                                      width: 115,
                                       child: Text(
                                         product[i][1],
                                         overflow: TextOverflow.ellipsis,
