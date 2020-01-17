@@ -6,7 +6,7 @@ A new Flutter application.
 
 <img src="https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_01.png?raw=true" width="271" height="462" /> <img src="https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_02.png?raw=true" width="271" height="462" /> <img src="https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_03.png?raw=true" width="271" height="462" /> <img src="https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_04.png?raw=true" width="271" height="462" />
 
-![Judul](https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_04.png)
+[Judul](https://github.com/wakdyan/Flutter-Tokopedia-UI/blob/master/screenshot/flutter_04.png)
 
 This project is a starting point for a Flutter application.
 
