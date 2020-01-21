@@ -25,6 +25,7 @@ dependencies:
   carousel_slider: ^1.4.1
   dots_indicator: ^1.1.0
   slide_countdown_clock: ^1.0.3
+  
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,9 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+    - assets/bottom_icons/
+    - assets/tab_icons/
+    - assets/login_button/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

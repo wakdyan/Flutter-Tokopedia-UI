@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tokopedia_app/utils/utils.dart';
+
+import '../../main.dart';
+import '../../utils/network_request.dart';
+import '../../utils/text_style.dart';
 
 class FeedUpdate extends StatefulWidget {
   FeedUpdate({Key key}) : super(key: key);
@@ -10,6 +13,8 @@ class FeedUpdate extends StatefulWidget {
 
 class _FeedUpdateState extends State<FeedUpdate> {
   ScrollController _scrollController;
+
+  final Color _color = Color(0xfffa581d);
 
   @override
   void initState() {
@@ -47,24 +52,35 @@ class _FeedUpdateState extends State<FeedUpdate> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         CircleAvatar(
-                            child: FlutterLogo(),
-                            backgroundColor: Colors.white),
+                          backgroundImage: NetworkImage(feedUpdates[index][0]),
+                        ),
                         SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Image.network(
-                                  "https://ecs7.tokopedia.net/img/newtkpd/powermerchant/ic-powermerchant-130px.png",
+                                Image.asset(
+                                  "assets/crown.png",
                                   height: 12,
                                   width: 12,
                                 ),
                                 SizedBox(width: 3),
-                                Text("Apocalypse"),
+                                Text(
+                                  feedUpdates[index][1],
+                                  style: textStyle(
+                                    12,
+                                    null,
+                                    FontWeight.w700,
+                                    null,
+                                  ),
+                                ),
                               ],
                             ),
-                            Text('4 menit yang lalu')
+                            Text(
+                              feedUpdates[index][2],
+                              style: textStyle(10, null, null, null),
+                            )
                           ],
                         ),
                         Expanded(
@@ -76,24 +92,22 @@ class _FeedUpdateState extends State<FeedUpdate> {
                                 child: Container(
                                   height: 30,
                                   width: 70,
-                                  color: Colors.green[1000],
+                                  color: _color,
                                   child: Center(
                                     child: Text(
                                       "Follow",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
+                                      style: textStyle(
+                                        10,
+                                        Colors.white,
+                                        FontWeight.w700,
+                                        null,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(
-                                  Icons.more_vert,
-                                  color: Color(0xFF9fa6b0),
-                                ),
+                                icon: Icon(Icons.more_vert),
                                 onPressed: () {},
                                 splashColor: Colors.transparent,
                               )
@@ -109,9 +123,8 @@ class _FeedUpdateState extends State<FeedUpdate> {
                     child: Container(
                       height: 300,
                       width: 300,
-                      color: Colors.green[1000],
                       child: Image.network(
-                        product[index][0],
+                        feedUpdates[index][3],
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -128,10 +141,14 @@ class _FeedUpdateState extends State<FeedUpdate> {
                     width: 344,
                     child: ListView.separated(
                       controller: _scrollController,
-                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 12,
+                      ),
                       scrollDirection: Axis.horizontal,
                       itemCount: 2,
                       itemBuilder: (context, i) {
+                        // print(feedUpdates[index][4][index][0]);
                         return Container(
                           width: 285,
                           decoration: BoxDecoration(
@@ -139,9 +156,10 @@ class _FeedUpdateState extends State<FeedUpdate> {
                             borderRadius: BorderRadius.circular(8),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 0))
+                                color: Colors.black26,
+                                blurRadius: 2,
+                                offset: Offset(0, 0),
+                              )
                             ],
                           ),
                           child: Padding(
@@ -157,7 +175,8 @@ class _FeedUpdateState extends State<FeedUpdate> {
                                   child: Container(
                                     height: 64,
                                     width: 64,
-                                    child: FlutterLogo(),
+                                    child: Image.network(
+                                        feedUpdates[index][4][i][0]),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -169,16 +188,18 @@ class _FeedUpdateState extends State<FeedUpdate> {
                                     Container(
                                       width: 115,
                                       child: Text(
-                                        product[i][1],
+                                        feedUpdates[index][4][i][1],
                                         overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 12),
                                       ),
                                     ),
                                     Text(
-                                      product[i][4],
-                                      style: TextStyle(
-                                        color: Color(0xfffa581d),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                      feedUpdates[index][4][i][2],
+                                      style: textStyle(
+                                        null,
+                                        _color,
+                                        FontWeight.w700,
+                                        null,
                                       ),
                                     ),
                                   ],
@@ -189,13 +210,11 @@ class _FeedUpdateState extends State<FeedUpdate> {
                                   child: Container(
                                     height: 30,
                                     width: 54,
-                                    color: Color(0xfffa581d),
+                                    color: _color,
                                     child: Center(
                                       child: Text(
                                         'Beli',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -223,14 +242,14 @@ class _FeedUpdateState extends State<FeedUpdate> {
                               children: <Widget>[
                                 Icon(
                                   Icons.thumb_up,
-                                  color: Color(0xFF9fa6b0),
+                                  color: kDarkSecondaryColor,
                                   size: 18,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Like',
                                   style: TextStyle(
-                                    color: Color(0xFF9fa6b0),
+                                    color: kDarkSecondaryColor,
                                   ),
                                 )
                               ],
@@ -243,15 +262,13 @@ class _FeedUpdateState extends State<FeedUpdate> {
                               children: <Widget>[
                                 Icon(
                                   Icons.comment,
-                                  color: Color(0xFF9fa6b0),
+                                  color: kDarkSecondaryColor,
                                   size: 18,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Comment',
-                                  style: TextStyle(
-                                    color: Color(0xFF9fa6b0),
-                                  ),
+                                  style: TextStyle(color: kDarkSecondaryColor),
                                 )
                               ],
                             ),
@@ -263,15 +280,13 @@ class _FeedUpdateState extends State<FeedUpdate> {
                               children: <Widget>[
                                 Icon(
                                   Icons.share,
-                                  color: Color(0xFF9fa6b0),
+                                  color: kDarkSecondaryColor,
                                   size: 18,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Share',
-                                  style: TextStyle(
-                                    color: Color(0xFF9fa6b0),
-                                  ),
+                                  style: TextStyle(color: kDarkSecondaryColor),
                                 )
                               ],
                             ),

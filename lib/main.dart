@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tokopedia_app/pages/account.dart';
-import 'package:tokopedia_app/pages/cart.dart';
-import 'package:tokopedia_app/pages/feed.dart';
-import 'package:tokopedia_app/pages/home.dart';
-import 'package:tokopedia_app/pages/login.dart';
-import 'package:tokopedia_app/pages/store.dart';
+
+import 'pages/account/account.dart';
+import 'pages/cart/cart.dart';
+import 'pages/feed/feed.dart';
+import 'pages/home/home.dart';
+import 'pages/login/login.dart';
+import 'pages/store/store.dart';
+import 'utils/text_style.dart';
+
+const kPrimaryColor = Color(0xFF42b54a);
+const kDarkSecondaryColor = Color(0xFF9fa6b0);
+const kLightSecondaryColor = Color(0xffb5bbc5);
+const kSecondaryColor = Color(0xFFF5F5F5);
 
 void main() {
   runApp(
@@ -12,8 +19,26 @@ void main() {
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           color: Colors.white,
-          iconTheme: IconThemeData(color: Color(0xFF9fa6b0)),
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: kDarkSecondaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          iconTheme: IconThemeData(color: kDarkSecondaryColor),
           brightness: Brightness.light,
+        ),
+        
+        iconTheme: IconThemeData(color: kDarkSecondaryColor),
+        primaryColor: kPrimaryColor,
+        accentColor: kPrimaryColor,
+        indicatorColor: kPrimaryColor,
+        tabBarTheme: TabBarTheme(
+          labelColor: kPrimaryColor,
+          labelStyle: TextStyle(fontWeight: FontWeight.w800),
+          unselectedLabelColor: kDarkSecondaryColor,
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
       home: MyApp(),
@@ -28,16 +53,28 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
-  TabController _tabController;
-  PageController _pageController;
-
-  int _currentIndex;
-  bool _isLogged;
-
-//  List<Widget> listPage = [Home(), Feed(), Store()];
-
-  List<Widget> listPages = [Home(), Feed(), Store(), Cart(), Account()];
-  List<String> namePages = [
+  final List<Widget> listPages = [
+    Home(),
+    Feed(),
+    Store(),
+    Cart(),
+    Account(),
+  ];
+  final List<String> inactiveIcon = [
+    "assets/bottom_icons/inactive_home.png",
+    "assets/bottom_icons/inactive_feed.png",
+    "assets/bottom_icons/inactive_official.png",
+    "assets/bottom_icons/inactive_cart.png",
+    "assets/bottom_icons/inactive_account.png",
+  ];
+  final List<String> activeIcons = [
+    "assets/bottom_icons/active_home.png",
+    "assets/bottom_icons/active_feed.png",
+    "assets/bottom_icons/active_official.png",
+    "assets/bottom_icons/active_cart.png",
+    "assets/bottom_icons/active_account.png",
+  ];
+  final List<String> pageNames = [
     "Home",
     "Feed",
     "Official Store",
@@ -45,13 +82,14 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     "Akun"
   ];
 
+  int _currentIndex;
+  bool _isLogged;
+
   @override
   void initState() {
     _isLogged = false;
     _currentIndex = 0;
-    _pageController =
-        PageController(initialPage: _currentIndex, keepPage: true);
-    _tabController = TabController(initialIndex: 1, length: 5, vsync: this);
+
     super.initState();
   }
 
@@ -70,7 +108,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           });
 
           if (_currentIndex == 3 || _currentIndex == 4) {
-            if (_isLogged == true) {
+            if (_isLogged) {
               _currentIndex = index;
             } else {
               Navigator.push(
@@ -80,37 +118,34 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           }
         },
         type: BottomNavigationBarType.fixed,
-        selectedIconTheme: IconThemeData(color: Colors.green[1000]),
-        selectedItemColor: Colors.green[1000],
-        selectedLabelStyle: TextStyle(fontSize: 12),
-        unselectedLabelStyle: TextStyle(color: Color(0xFF9fa6b0)),
-        unselectedIconTheme: IconThemeData(color: Color(0xFF9fa6b0)),
+        selectedLabelStyle: textStyle(12, kPrimaryColor, null, null),
+        unselectedLabelStyle: textStyle(12, kDarkSecondaryColor, null, null),
         items: [
           BottomNavigationBarItem(
-            icon:
-                Image.asset("assets/inactive_home.png", height: 24, width: 24),
-            activeIcon:
-                Image.asset("assets/active_home.png", height: 24, width: 24),
-            title: Text(namePages[0]),
+            icon: Image.asset(inactiveIcon[0], height: 24),
+            activeIcon: Image.asset(activeIcons[0], height: 24),
+            title: Text(pageNames[0]),
           ),
           BottomNavigationBarItem(
-              icon: Image.asset("assets/inactive_feed.png"),
-              activeIcon: Image.asset("assets/active_feed.png"),
-              title: Text(namePages[1])),
+            icon: Image.asset(inactiveIcon[1]),
+            activeIcon: Image.asset(activeIcons[1]),
+            title: Text(pageNames[1]),
+          ),
           BottomNavigationBarItem(
-              icon: Image.asset("assets/inactive_official.png"),
-              activeIcon: Image.asset("assets/active_official.png"),
-              title: Text(namePages[2])),
+            icon: Image.asset(inactiveIcon[2]),
+            activeIcon: Image.asset(activeIcons[2]),
+            title: Text(pageNames[2]),
+          ),
           BottomNavigationBarItem(
-              icon: Image.asset("assets/inactive_cart.png",
-                  height: 24, width: 24),
-              activeIcon:
-                  Image.asset("assets/active_cart.png", height: 24, width: 24),
-              title: Text(namePages[3])),
+            icon: Image.asset(inactiveIcon[3], height: 24),
+            activeIcon: Image.asset(activeIcons[3], height: 24),
+            title: Text(pageNames[3]),
+          ),
           BottomNavigationBarItem(
-              icon: Image.asset("assets/inactive_account.png"),
-              activeIcon: Image.asset("assets/active_account.png"),
-              title: Text(namePages[4])),
+            icon: Image.asset(inactiveIcon[4]),
+            activeIcon: Image.asset(activeIcons[4]),
+            title: Text(pageNames[4]),
+          ),
         ],
       ),
     );
@@ -118,8 +153,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _pageController.dispose();
     super.dispose();
   }
 }

@@ -1,7 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:tokopedia_app/utils/utils.dart';
+
+import '../../main.dart';
+import '../../utils/network_request.dart';
+import '../../utils/text_style.dart';
+
+const Color kDiscountColor = Color(0xfffa581d);
+const Color kAccentDiscountColor = Color(0xffff5c85);
+const Color kPriceColor = Color(0xFF31343b);
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -11,6 +18,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<String> nameIcons = [
+    "Semua Kategori",
+    "Belanja",
+    "Top-Up & Tagihan",
+    "Travel & Entertainment",
+    "Keuangan",
+    "Elektronik",
+    "Handphone & Tablet",
+    "Pulsa",
+    "Pascabayar",
+    "Emas"
+  ];
+
+  final Color _primaryAccentColor = Color(0xffe5e7e9);
+
   double _currentIndex;
 
   @override
@@ -30,11 +52,9 @@ class _HomeState extends State<Home> {
             decoration: InputDecoration(
               filled: true,
               hintText: "Cari produk atau toko",
-              hintStyle: TextStyle(color: Color(0xffb5bbc5)),
               disabledBorder: InputBorder.none,
-              prefixIcon: Icon(Icons.search, color: Color(0xffb5bbc5)),
-              suffixIcon: Icon(Icons.camera_alt, color: Color(0xffb5bbc5)),
-              fillColor: Color(0xFFF5F5F5),
+              prefixIcon: Icon(Icons.search, color: kLightSecondaryColor),
+              suffixIcon: Icon(Icons.camera_alt, color: kLightSecondaryColor),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
                 borderSide: BorderSide(color: Colors.white),
@@ -72,9 +92,8 @@ class _HomeState extends State<Home> {
               CarouselSlider.builder(
                   autoPlay: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
-//                  height: 113, //123
                   aspectRatio: 2.99 / 1,
-                  itemCount: imagePath.length,
+                  itemCount: homeImagePaths.length,
                   onPageChanged: (index) {
                     setState(() {
                       _currentIndex = index.toDouble();
@@ -88,10 +107,10 @@ class _HomeState extends State<Home> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-//                          height: 123,
-                          color: Colors.green,
-                          child:
-                              Image.network(imagePath[index], fit: BoxFit.fill),
+                          child: Image.network(
+                            homeImagePaths[index],
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     );
@@ -104,21 +123,17 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       DotsIndicator(
-                        dotsCount: imagePath.length,
+                        dotsCount: homeImagePaths.length,
                         position: _currentIndex,
                         decorator: DotsDecorator(
-                          activeColor: Colors.green[1000],
-                          color: Color(0xffe5e7e9),
+                          activeColor: kPrimaryColor,
+                          color: _primaryAccentColor,
                         ),
-//                        reversed: true,
                       ),
                       Text(
                         'Lihat Semua Promo',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.green[1000],
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            textStyle(12, kPrimaryColor, FontWeight.bold, null),
                       )
                     ],
                   ),
@@ -148,8 +163,8 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Image.network(
-                                "https://lh3.googleusercontent.com/w6VlaVspqTF0s63jV4Q094uKRcd3V9Y9YZaR6YYBOxc2IZ9WAtZ6l3OVCeVzl9o0J7TC",
+                              Image.asset(
+                                "assets/bar_code.png",
                                 height: 29,
                                 width: 29,
                                 filterQuality: FilterQuality.low,
@@ -187,16 +202,21 @@ class _HomeState extends State<Home> {
                                     children: <Widget>[
                                       Text(
                                         'TokoPoint',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
+                                        style: textStyle(
+                                          12,
+                                          null,
+                                          FontWeight.bold,
+                                          null,
+                                        ),
                                       ),
                                       Text(
                                         'Cek Sekarang',
-                                        style: TextStyle(
-                                            color: Colors.green[1000],
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
+                                        style: textStyle(
+                                          12,
+                                          kPrimaryColor,
+                                          FontWeight.bold,
+                                          null,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -221,7 +241,7 @@ class _HomeState extends State<Home> {
             height: 74,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: iconName.length,
+              itemCount: nameIcons.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(left: 6),
@@ -230,12 +250,12 @@ class _HomeState extends State<Home> {
                       Container(
                         height: 48,
                         width: 48,
-                        child: Image.network(iconPath[index]),
+                        child: Image.network(iconPaths[index]),
                       ),
                       Container(
                         width: 65,
                         child: Text(
-                          iconName[index],
+                          nameIcons[index],
                           maxLines: 2,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 11),
@@ -280,15 +300,22 @@ class _HomeState extends State<Home> {
                               children: <Widget>[
                                 Text(
                                   'Home Living Deals',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600),
+                                  style: textStyle(
+                                    null,
+                                    Colors.white,
+                                    FontWeight.w600,
+                                    null,
+                                  ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   'Diskon Hingga 80%',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13),
+                                  style: textStyle(
+                                    13,
+                                    Colors.white,
+                                    null,
+                                    null,
+                                  ),
                                 ),
                               ],
                             ),
@@ -300,9 +327,11 @@ class _HomeState extends State<Home> {
                                 child: Center(
                                     child: Text(
                                   'Cek Sekarang',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w800,
+                                  style: textStyle(
+                                    null,
+                                    Colors.white,
+                                    FontWeight.w800,
+                                    null,
                                   ),
                                 )),
                                 decoration: BoxDecoration(
@@ -328,66 +357,70 @@ class _HomeState extends State<Home> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter),
                 ),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: product.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8, bottom: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            height: 208,
-                            width: 120,
-                            color: Colors.white,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 112,
-                                  width: 120,
-                                  color: Colors.green[1000],
-                                  child: Image.network(
-                                    product[index][0],
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 3,
-                                          top: 5,
-                                          right: 3,
-                                        ),
-                                        child: Text(
-                                          product[index][1],
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                      ),
-                                      (product[index][2] == null ||
-                                              product[index][3] == null)
-                                          ? price(product[index][4])
-                                          : discountPrice(
-                                              product[index][2],
-                                              product[index][3],
-                                              product[index][4])
-                                    ],
-                                  ),
-                                )
-                              ],
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        height: 208,
+                        width: 120,
+                        color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 112,
+                              width: 120,
+                              child: Image.network(
+                                products[index][0],
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 3,
+                                      top: 5,
+                                      right: 3,
+                                    ),
+                                    child: Text(
+                                      products[index][1],
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textStyle(
+                                        13,
+                                        null,
+                                        FontWeight.w800,
+                                        null,
+                                      ),
+                                    ),
+                                  ),
+                                  (products[index][2] == null ||
+                                          products[index][3] == null)
+                                      ? price(products[index][4])
+                                      : discountPrice(
+                                          products[index][2],
+                                          products[index][3],
+                                          products[index][4])
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                    );
+                  },
+                ),
               )
             ],
           ),
@@ -401,10 +434,7 @@ class _HomeState extends State<Home> {
       padding: EdgeInsets.only(left: 3),
       child: Text(
         product,
-        style: TextStyle(
-            color: Color(0xfffa581d),
-            fontSize: 12,
-            fontWeight: FontWeight.w700),
+        style: textStyle(12, kDiscountColor, FontWeight.w700, null),
       ),
     );
   }
@@ -426,10 +456,12 @@ class _HomeState extends State<Home> {
                   child: Center(
                     child: Text(
                       percentage,
-                      style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xffff5c85)),
+                      style: textStyle(
+                        10,
+                        kAccentDiscountColor,
+                        FontWeight.w700,
+                        null,
+                      ),
                     ),
                   ),
                 ),
@@ -437,11 +469,11 @@ class _HomeState extends State<Home> {
               SizedBox(width: 3),
               Text(
                 realPrice,
-                style: TextStyle(
-                  color: Color(0xFF31343b).withOpacity(.44),
-                  decoration: TextDecoration.lineThrough,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
+                style: textStyle(
+                  10,
+                  kPriceColor.withOpacity(.44),
+                  FontWeight.w700,
+                  TextDecoration.lineThrough,
                 ),
               ),
             ],
@@ -449,10 +481,11 @@ class _HomeState extends State<Home> {
           SizedBox(height: 5),
           Text(
             realPrice,
-            style: TextStyle(
-              color: Color(0xfffa581d),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+            style: textStyle(
+              12,
+              kDiscountColor,
+              FontWeight.w700,
+              null,
             ),
           ),
         ],

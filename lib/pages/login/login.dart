@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
+import '../../utils/text_style.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _textEditingController;
-
-  @override
-  void initState() {
-    _textEditingController = TextEditingController();
-    super.initState();
-  }
+  final TextEditingController _textEditingController = TextEditingController();
+  final Color _color = Color(0xff31353b);
+  final Color _lightColor = Color(0xffe5e7e9);
+  final Color _borderButtonColor = Color(0xffdbdee2);
+  final Color _closeBottomSheetColor = Color(0xff6c727c);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,10 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black87),
-        title: Text('Masuk',
-            style: TextStyle(color: Color(0xff31353b).withOpacity(.96))),
+        title: Text(
+          'Masuk',
+          style: textStyle(null, _color.withOpacity(.96), null, null),
+        ),
         brightness: Brightness.light,
         actions: <Widget>[
           Padding(
@@ -32,7 +35,7 @@ class _LoginState extends State<Login> {
               child: Center(
                 child: Text(
                   'Daftar',
-                  style: TextStyle(color: Colors.green[1000]),
+                  style: TextStyle(color: kPrimaryColor),
                 ),
               ),
             ),
@@ -49,7 +52,7 @@ class _LoginState extends State<Login> {
                 'Nomor Ponsel atau Email',
                 style: TextStyle(
                   fontSize: 11.9,
-                  color: Color(0xff31353b).withOpacity(.96),
+                  color: _color.withOpacity(.96),
                 ),
               ),
               TextField(
@@ -61,7 +64,7 @@ class _LoginState extends State<Login> {
                 'Contoh: 08123456789',
                 style: TextStyle(
                   fontSize: 11.9,
-                  color: Color(0xff31353b).withOpacity(.96),
+                  color: _color.withOpacity(.96),
                 ),
               ),
               SizedBox(height: 20),
@@ -71,14 +74,13 @@ class _LoginState extends State<Login> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: _textEditingController.text.length >= 6
-                      ? Colors.green[1000]
-                      : Color(0xffe5e7e9),
+                      ? kPrimaryColor
+                      : _lightColor,
                 ),
                 child: Center(
                   child: Text(
                     'Selanjutnya',
-                    style: TextStyle(
-                        color: Color(0xff31353b), fontWeight: FontWeight.w800),
+                    style: textStyle(null, _color, FontWeight.w800, null),
                   ),
                 ),
               ),
@@ -116,8 +118,12 @@ class _LoginState extends State<Login> {
                   child: Center(
                     child: Text(
                       'Akun Media Sosial',
-                      style: TextStyle(
-                          color: Colors.black54, fontWeight: FontWeight.w800),
+                      style: textStyle(
+                        null,
+                        Colors.black54,
+                        FontWeight.w800,
+                        null,
+                      ),
                     ),
                   ),
                 ),
@@ -127,13 +133,11 @@ class _LoginState extends State<Login> {
                 child: RichText(
                   text: TextSpan(
                       text: 'Belum punya akun Tokopedia?',
-                      style: TextStyle(color: Colors.black54, fontSize: 11.9),
+                      style: textStyle(11.9, Colors.black54, null, null),
                       children: [
                         TextSpan(
                           text: " Daftar",
-                          style: TextStyle(
-                            color: Colors.green[1000],
-                          ),
+                          style: textStyle(null, kPrimaryColor, null, null),
                         )
                       ]),
                 ),
@@ -170,16 +174,17 @@ class _LoginState extends State<Login> {
                   IconButton(
                     icon: Icon(
                       Icons.clear,
-                      color: Color(0xff6c727c),
+                      color: _closeBottomSheetColor,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   Text(
                     'Pilih akun untuk masuk',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xff31353b).withOpacity(.96),
+                    style: textStyle(
+                      18,
+                      _color.withOpacity(.96),
+                      FontWeight.w800,
+                      null,
                     ),
                   )
                 ],
@@ -193,15 +198,16 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white,
                     border: Border.all(
-                      color: Color(0xffdbdee2),
+                      color: _borderButtonColor,
                     ),
                   ),
                   child: Stack(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                        child: Image.network(
-                          "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: Image.asset(
+                          "assets/login_button/google.png",
                           height: 20,
                           width: 20,
                         ),
@@ -209,9 +215,11 @@ class _LoginState extends State<Login> {
                       Center(
                         child: Text(
                           "Google",
-                          style: TextStyle(
-                            color: Color(0xff31353b).withOpacity(.68),
-                            fontWeight: FontWeight.w800,
+                          style: textStyle(
+                            null,
+                            _color.withOpacity(.68),
+                            FontWeight.w800,
+                            null,
                           ),
                         ),
                       ),
@@ -228,15 +236,16 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white,
                     border: Border.all(
-                      color: Color(0xffdbdee2),
+                      color: _borderButtonColor,
                     ),
                   ),
                   child: Stack(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                        child: Image.network(
-                          "https://cdn3.iconfinder.com/data/icons/happily-colored-snlogo/512/facebook.png",
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: Image.asset(
+                          "assets/login_button/facebook.png",
                           height: 20,
                           width: 20,
                         ),
@@ -244,9 +253,11 @@ class _LoginState extends State<Login> {
                       Center(
                         child: Text(
                           "Facebook",
-                          style: TextStyle(
-                            color: Color(0xff31353b).withOpacity(.68),
-                            fontWeight: FontWeight.w800,
+                          style: textStyle(
+                            null,
+                            _color.withOpacity(.68),
+                            FontWeight.w800,
+                            null,
                           ),
                         ),
                       ),
