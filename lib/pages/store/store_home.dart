@@ -174,8 +174,8 @@ class _StoreHomeState extends State<StoreHome> {
                             ),
                             child: (flashSales[0][i][1] == null ||
                                     flashSales[0][i][3] == null)
-                                ? price(flashSales[0][i][2])
-                                : discountPrice(flashSales[0][i][1],
+                                ? _price(flashSales[0][i][2])
+                                : _discountPrice(flashSales[0][i][1],
                                     flashSales[0][i][2], flashSales[0][i][3]),
                           )
                         ],
@@ -197,7 +197,7 @@ class _StoreHomeState extends State<StoreHome> {
     );
   }
 
-  price(product) {
+  _price(product) {
     return Padding(
       padding: EdgeInsets.only(left: 3),
       child: Text(
@@ -207,7 +207,7 @@ class _StoreHomeState extends State<StoreHome> {
     );
   }
 
-  discountPrice(percentage, realPrice, discountPrice) {
+  _discountPrice(percentage, realPrice, discountPrice) {
     return Padding(
       padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Column(
